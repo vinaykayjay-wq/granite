@@ -80,7 +80,7 @@ echo "==> Converting to DEX with D8..."
 java -cp $D8_JAR com.android.tools.r8.D8 \
   --output $OUT_DIR \
   --lib $PLATFORM/android.jar \
-  --min-api 24 \
+  --min-api 21 \
   $CLASSES_DIR/app.jar \
   $LIBS_DIR/kotlin-stdlib.jar \
   $LIBS_DIR/kotlin-stdlib-jdk7.jar \
