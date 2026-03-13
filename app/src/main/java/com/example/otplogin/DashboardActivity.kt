@@ -1,76 +1,45 @@
 package com.example.otplogin
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import com.example.otplogin.databinding.ActivityDashboardBinding
+import android.widget.Button
+import android.widget.TextView
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : Activity() {
 
-    companion object {
-        const val EXTRA_PHONE = "extra_phone"
-    }
-
-    private lateinit var binding: ActivityDashboardBinding
+    companion object { const val EXTRA_PHONE = "extra_phone" }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDashboardBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_dashboard)
 
         val phone = intent.getStringExtra(EXTRA_PHONE) ?: "Unknown"
-        setupUI(phone)
+        findViewById<TextView>(R.id.tvWelcome).text     = "Welcome!"
+        findViewById<TextView>(R.id.tvPhoneNumber).text = "+91 $phone"
+
+        listOf(
+            R.id.cardProfile      to "My Profile",
+            R.id.cardTransactions to "Transactions",
+            R.id.cardSettings     to "Settings",
+            R.id.cardHelp         to "Help & Support"
+        ).forEach { (id, name) ->
+            findViewById<android.view.View>(id).setOnClickListener { showComingSoon(name) }
+        }
+
+        findViewById<Button>(R.id.btnLogout).setOnClickListener { confirmLogout() }
     }
 
-    private fun setupUI(phone: String) {
-        binding.tvWelcome.text = "Welcome!"
-        binding.tvPhoneNumber.text = "+91 $phone"
+    private fun showComingSoon(f: String) =
+        AlertDialog.Builder(this).setTitle(f).setMessage("$f coming soon!").setPositiveButton("OK", null).show()
 
-        val menuItems = listOf(
-            Pair("My Profile", R.drawable.ic_profile),
-            Pair("Transactions", R.drawable.ic_transactions),
-            Pair("Settings", R.drawable.ic_settings),
-            Pair("Help & Support", R.drawable.ic_help)
-        )
-
-        binding.cardProfile.setOnClickListener {
-            showComingSoon("My Profile")
-        }
-        binding.cardTransactions.setOnClickListener {
-            showComingSoon("Transactions")
-        }
-        binding.cardSettings.setOnClickListener {
-            showComingSoon("Settings")
-        }
-        binding.cardHelp.setOnClickListener {
-            showComingSoon("Help & Support")
-        }
-
-        binding.btnLogout.setOnClickListener {
-            confirmLogout()
-        }
-    }
-
-    private fun showComingSoon(feature: String) {
-        AlertDialog.Builder(this)
-            .setTitle(feature)
-            .setMessage("$feature feature coming soon!")
-            .setPositiveButton("OK", null)
-            .show()
-    }
-
-    private fun confirmLogout() {
-        AlertDialog.Builder(this)
-            .setTitle("Logout")
-            .setMessage("Are you sure you want to logout?")
-            .setPositiveButton("Logout") { _, _ ->
-                val intent = Intent(this, LoginActivity::class.java).apply {
+    private fun confirmLogout() =
+        AlertDialog.Builder(this).setTitle("Logout").setMessage("Logout?")
+            .setPositiveButton("Yes") { _, _ ->
+                startActivity(Intent(this, LoginActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                }
-                startActivity(intent)
+                })
             }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
+            .setNegativeButton("Cancel", null).show()
 }
