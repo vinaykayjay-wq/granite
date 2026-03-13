@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Colors -->
+    <color name="primary">#1565C0</color>
+    <color name="primary_variant">#003C8F</color>
+    <color name="primary_light">#5E92F3</color>
+    <color name="secondary">#00ACC1</color>
+
+    <!-- UI Colors -->
+    <color name="background">#F5F7FA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="error">#D32F2F</color>
+    <color name="success">#2E7D32</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#1A1A2E</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_hint">#9CA3AF</color>
+
+    <!-- Misc -->
+    <color name="divider">#E5E7EB</color>
+    <color name="otp_box_bg">#F0F4FF</color>
+    <color name="otp_box_stroke">#1565C0</color>
+</resources>
